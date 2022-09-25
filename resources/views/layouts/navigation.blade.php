@@ -34,6 +34,12 @@
             {{ __('Mypage') }}
           </x-nav-link>
         </div>
+        <!-- 🔽 検索画面へのリンクを追加 -->
+        <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+          <x-nav-link :href="route('search.input')" :active="request()->routeIs('search.input')">
+            {{ __('Search') }}
+          </x-nav-link>
+        </div>
       </div>
 
       <!-- Settings Dropdown -->
@@ -100,6 +106,11 @@
     <div class="pt-2 pb-3 space-y-1">
       <x-responsive-nav-link :href="route('question.mypage')" :active="request()->routeIs('question.mypage')">
         {{ __('Mypage') }}
+      </x-responsive-nav-link>
+    </div>
+    <div class="pt-2 pb-3 space-y-1">
+      <x-responsive-nav-link :href="route('search.input')" :active="request()->routeIs('search.input')">
+        {{ __('Search') }}
       </x-responsive-nav-link>
     </div>
 
