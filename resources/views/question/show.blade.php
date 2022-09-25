@@ -22,10 +22,29 @@
                 {{$question->description}}
               </p>
             </div>
-            <a href="{{ url()->previous() }}" class="block text-center w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
-              Back
-            </a>
           </div>
+
+          @include('common.errors')
+          <form class="mb-6" action="{{ route('answer.store') }}" method="POST">
+            @csrf
+            <input type="hidden" name="question_id" value="{{ $question->id }}">
+            <div class="flex flex-col mb-4">
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="answer">New Answer</label>
+              <input class="border py-2 px-3 text-grey-darkest" type="text" name="answer" id="answer">
+            </div>
+            <div class="flex flex-col mb-4">
+              <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="description">Description</label>
+              <input class="border py-2 px-3 text-grey-darkest" type="text" name="description" id="description">
+            </div>
+            <div class="flex justify-evenly">
+              <a href="{{ url()->previous() }}" class="block text-center w-5/12 py-3 mt-6 font-medium tracking-widest text-black uppercase bg-gray-100 shadow-sm focus:outline-none hover:bg-gray-200 hover:shadow-none">
+                Back
+              </a>
+              <button type="submit" class="w-5/12 py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+                Add Answer
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\ThumbsUpController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AnswerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use App\Http\Controllers\SearchController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::resource('answer', AnswerController::class);
+
     Route::get('/question/search/input', [SearchController::class, 'create'])->name('search.input');
     Route::get('/question/search/result', [SearchController::class, 'index'])->name('search.result');
 
