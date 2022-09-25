@@ -20,6 +20,7 @@
               <tr class="hover:bg-grey-lighter">
                 <td class="py-4 px-6 border-b border-grey-light">
                   <!-- 詳細画面へのリンク -->
+                  <p class="text-left text-grey-dark">{{$question->user->name}}</p>
                   <a href="{{ route('question.show',$question->id) }}">
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$question->question}}</h3>
                   </a>
