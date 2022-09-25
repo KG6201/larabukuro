@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ThumbsUpController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,9 @@ use App\Http\Controllers\QuestionController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('question/{question}/thumbsup', [ThumbsUpController::class, 'store'])->name('thumbsup');
+    Route::post('question/{question}/unthumbsup', [ThumbsUpController::class, 'destroy'])->name('unthumbsup');
+
     Route::get('/question/mypage', [QuestionController::class, 'mydata'])->name('question.mypage');
     Route::resource('question', QuestionController::class);
 });

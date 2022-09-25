@@ -25,6 +25,31 @@
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$question->question}}</h3>
                   </a>
                   <div class="flex">
+                    <!-- thumbsup 状態で条件分岐 -->
+                    @if($question->users()->where('user_id', Auth::id())->exists())
+                    <!-- unthumbsup ボタン -->
+                    <form action="{{ route('unthumbsup',$question) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-red py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-8 w-8 text-red-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="red" fill="none" stroke-linecap="round" stroke-linejoin="round"> 
+                            <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M7 11v 8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" />
+                        </svg>
+                        {{ $question->users()->count() }}
+                      </button>
+                    </form>
+                    @else
+                    <!-- thumbsup ボタン -->
+                    <form action="{{ route('thumbsup',$question) }}" method="POST" class="text-left">
+                      @csrf
+                      <button type="submit" class="flex mr-2 ml-2 text-sm hover:bg-gray-200 hover:shadow-none text-black py-1 px-2 focus:outline-none focus:shadow-outline">
+                        <svg class="h-8 w-8 text-gray-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="gray" fill="none" stroke-linecap="round" stroke-linejoin="round"> 
+                            <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M7 11v 8a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1v-7a1 1 0 0 1 1 -1h3a4 4 0 0 0 4 -4v-1a2 2 0 0 1 4 0v5h3a2 2 0 0 1 2 2l-1 5a2 3 0 0 1 -2 2h-7a3 3 0 0 1 -3 -3" />
+                        </svg>
+                        {{ $question->users()->count() }}
+                      </button>
+                    </form>
+                    @endif
+
                     <!-- 🔽 条件分岐でログインしているユーザが投稿したquestionのみ編集ボタンと削除ボタンが表示される -->
                     @if ($question->user_id === Auth::user()->id)
                     <!-- 更新ボタン -->
