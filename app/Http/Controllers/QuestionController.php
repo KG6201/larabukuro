@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Validator;
 use App\Models\Question;
 use Auth;
+use App\Models\User;
 
 class QuestionController extends Controller
 {
@@ -119,5 +120,15 @@ class QuestionController extends Controller
         $result = Question::find($id)->delete();
         return redirect()->route('question.index');
         //
+    }
+
+    public function mydata()
+    {
+        $questions = User::query()
+        ->find(Auth::user()->id)
+        ->userQuestions()
+        ->orderBy('created_at','desc')
+        ->get();
+        return view('question.index', compact('questions'));
     }
 }

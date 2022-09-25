@@ -24,6 +24,8 @@
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$question->question}}</h3>
                   </a>
                   <div class="flex">
+                    <!-- 🔽 条件分岐でログインしているユーザが投稿したquestionのみ編集ボタンと削除ボタンが表示される -->
+                    @if ($question->user_id === Auth::user()->id)
                     <!-- 更新ボタン -->
                     <form action="{{ route('question.edit',$question->id) }}" method="GET" class="text-left">
                       @csrf
@@ -43,6 +45,7 @@
                         </svg>
                       </button>
                     </form>
+                    @endif
                   </div>
                 </td>
               </tr>

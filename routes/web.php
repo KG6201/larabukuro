@@ -14,6 +14,7 @@ use App\Http\Controllers\QuestionController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/question/mypage', [QuestionController::class, 'mydata'])->name('question.mypage');
     Route::resource('question', QuestionController::class);
 });
 
