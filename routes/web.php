@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ThumbsUpController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,18 @@ use App\Http\Controllers\QuestionController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/question/search/input', [SearchController::class, 'create'])->name('search.input');
+    Route::get('/question/search/result', [SearchController::class, 'index'])->name('search.result');
+
+    Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
+
+    Route::post('user/{user}/follow', [FollowController::class, 'store'])->name('follow');
+    Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
+
+    Route::post('question/{question}/thumbsup', [ThumbsUpController::class, 'store'])->name('thumbsup');
+    Route::post('question/{question}/unthumbsup', [ThumbsUpController::class, 'destroy'])->name('unthumbsup');
+
+    Route::get('/question/mypage', [QuestionController::class, 'mydata'])->name('question.mypage');
     Route::resource('question', QuestionController::class);
 });
 

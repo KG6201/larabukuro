@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Question;
+use Auth;
+use App\Models\User;
 
 class QuestionController extends Controller
 {
@@ -15,9 +17,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = [];
+        $questions = Question::getAllOrderByUpdated_at();
         return view('question.index',compact('questions'));
-        return view();
     }
 
     /**
@@ -38,7 +39,24 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // バリデーション
+        $validator = Validator::make($request->all(), [
+            'question' => 'required | max:191',
+            'description' => 'required',
+        ]);
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect()
+            ->route('question.create')
+            ->withInput()
+            ->withErrors($validator);
+        }
+        // create()は最初から用意されている関数
+        // 戻り値は挿入されたレコードの情報
+        $data = $request->merge(['user_id' => Auth::user()->id])->all();
+        $result = Question::create($data);
+
+        return redirect()->route('question.index');
     }
 
     /**
@@ -49,7 +67,8 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = Question::find($id);
+        return view('question.show', compact('question'));
     }
 
     /**
@@ -60,7 +79,8 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        return view('question.edit', compact('question'));
     }
 
     /**
@@ -72,7 +92,21 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //バリデーション
+        $validator = Validator::make($request->all(), [
+            'question' => 'required | max:191',
+            'description' => 'required',
+        ]);
+        //バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect()
+            ->route('question.edit', $id)
+            ->withInput()
+            ->withErrors($validator);
+        }
+        //データ更新処理
+        $result = Question::find($id)->update($request->all());
+        return redirect()->route('question.index');
     }
 
     /**
@@ -83,6 +117,18 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
+        $result = Question::find($id)->delete();
+        return redirect()->route('question.index');
         //
+    }
+
+    public function mydata()
+    {
+        $questions = User::query()
+        ->find(Auth::user()->id)
+        ->userQuestions()
+        ->orderBy('created_at','desc')
+        ->get();
+        return view('question.index', compact('questions'));
     }
 }
