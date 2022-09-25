@@ -16,6 +16,8 @@ use App\Http\Controllers\FollowController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('user/{user}', [FollowController::class, 'show'])->name('follow.show');
+
     Route::post('user/{user}/follow', [FollowController::class, 'store'])->name('follow');
     Route::post('user/{user}/unfollow', [FollowController::class, 'destroy'])->name('unfollow');
 
