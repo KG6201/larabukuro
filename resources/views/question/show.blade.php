@@ -45,6 +45,36 @@
               </button>
             </div>
           </form>
+
+          <table class="text-center w-full border-collapse">
+            <thead>
+              <tr>
+                <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-lg text-grey-dark border-b border-grey-light">Answers</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($answers as $answer)
+              <tr class="hover:bg-grey-lighter">
+                <td class="text-left py-4 px-6 border-b border-grey-light">
+                  <div class="flex flex-col mb-4">
+                    <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Answer</p>
+                    <p class="py-2 px-3 text-grey-darkest" id="question">
+                        {{$answer->answer}}
+                    </p>
+                  </div>
+                  <div class="flex flex-col mb-4">
+                    <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Description</p>
+                    <p class="py-2 px-3 text-grey-darkest" id="description">
+                        {{$answer->description}}
+                    </p>
+                  </div>
+                    <!-- 更新ボタン -->
+                    <!-- 削除ボタン -->
+                </td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
