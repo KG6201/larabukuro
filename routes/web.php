@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ThumbsUpController;
+use App\Http\Controllers\ThumbsUpAnswerController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\AnswerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,9 @@ use App\Http\Controllers\AnswerController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('answer/{answer}/thumbsup', [ThumbsUpAnswerController::class, 'store'])->name('thumbsupanswer');
+    Route::post('answer/{answer}/unthumbsup', [ThumbsUpAnswerController::class, 'destroy'])->name('unthumbsupanswer');
+
     Route::resource('answer', AnswerController::class);
 
     Route::get('/question/search/input', [SearchController::class, 'create'])->name('search.input');
