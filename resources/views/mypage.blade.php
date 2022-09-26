@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Question Index') }}
+      {{ __('My Question and Answer') }}
     </h2>
   </x-slot>
 
@@ -24,6 +24,18 @@
                     <h3 class="text-left font-bold text-lg text-grey-dark">{{$question->question}}</h3>
                   </a>
                   <div class="flex">
+                    @if($question->questionAnswers()->exists())
+                      <svg class="h-6 w-6 text-black mt-1"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                      </svg>
+                      {{ $question->questionAnswers()->count() }}
+                    @else
+                      <svg class="h-6 w-6 text-gray mt-1"  fill="none" viewBox="0 0 24 24" stroke="gray">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                      </svg>
+                      {{ $question->questionAnswers()->count() }}
+                    @endif
+
                     <!-- thumbsup 状態で条件分岐 -->
                     @if($question->users()->where('user_id', Auth::id())->exists())
                     <!-- unthumbsup ボタン -->
@@ -77,6 +89,8 @@
               @endforeach
             </tbody>
           </table>
+
+          <x-dropdown-link/>
 
           <table class="text-center w-full border-collapse">
             <thead>
