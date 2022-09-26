@@ -42,14 +42,14 @@ class AnswerController extends Controller
         $validator = Validator::make($request->all(), [
             'answer' => 'required | max:191',
             'description' => 'required',
+            'question_id' => 'required | exists:questions,id',
         ]);
         // バリデーション:エラー
         if ($validator->fails()) {
             return redirect()
-            // ->route('tweet.create')
-            ->route('question.index')
-            ->withInput()
-            ->withErrors($validator);
+                ->back()
+                ->withInput()
+                ->withErrors($validator);
         }
         // create()は最初から用意されている関数
         // 戻り値は挿入されたレコードの情報
