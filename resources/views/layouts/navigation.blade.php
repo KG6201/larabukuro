@@ -30,7 +30,7 @@
         </div>
         <!-- 🔽 マイページへのリンクを追加 -->
         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-          <x-nav-link :href="route('question.mypage')" :active="request()->routeIs('question.mypage')">
+          <x-nav-link :href="route('mypage')" :active="request()->routeIs('mypage')">
             {{ __('Mypage') }}
           </x-nav-link>
         </div>
@@ -104,7 +104,7 @@
     </div>
     <!-- 🔽 マイページへのリンクを追加 -->
     <div class="pt-2 pb-3 space-y-1">
-      <x-responsive-nav-link :href="route('question.mypage')" :active="request()->routeIs('question.mypage')">
+      <x-responsive-nav-link :href="route('mypage')" :active="request()->routeIs('mypage')">
         {{ __('Mypage') }}
       </x-responsive-nav-link>
     </div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\ThumbsUpController;
 use App\Http\Controllers\ThumbsUpAnswerController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\MypageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('question/{question}/thumbsup', [ThumbsUpController::class, 'store'])->name('thumbsup');
     Route::post('question/{question}/unthumbsup', [ThumbsUpController::class, 'destroy'])->name('unthumbsup');
 
-    Route::get('/question/mypage', [QuestionController::class, 'mydata'])->name('question.mypage');
+    Route::get('/mypage', MypageController::class)->name('mypage');
     Route::resource('question', QuestionController::class);
 });
 

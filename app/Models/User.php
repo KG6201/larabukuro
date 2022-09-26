@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
+    public function userAnswers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     public function questions()
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
