@@ -81,7 +81,8 @@ class AnswerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $answer = Answer::find($id);
+        return view('answer.edit', compact('answer'));
     }
 
     /**
@@ -93,7 +94,21 @@ class AnswerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //バリデーション
+        $validator = Validator::make($request->all(), [
+            'answer' => 'required | max:191',
+            'description' => 'required',
+        ]);
+        //バリデーション:エラー
+        if ($validator->fails()) {
+            return redirect()
+            ->route('answer.edit', $id)
+            ->withInput()
+            ->withErrors($validator);
+        }
+        //データ更新処理
+        $result = Answer::find($id)->update($request->all());
+        return redirect()->route('question.index');
     }
 
     /**
@@ -104,6 +119,7 @@ class AnswerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $result = Answer::find($id)->delete();
+        return redirect()->back();
     }
 }
