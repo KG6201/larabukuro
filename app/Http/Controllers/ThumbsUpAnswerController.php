@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Question;
+use App\Models\Answer;
 use Auth;
 
-class ThumbsUpController extends Controller
+class ThumbsUpAnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,9 +34,10 @@ class ThumbsUpController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Question $question)
+    public function store(Answer $answer)
     {
-        $question->users()->attach(Auth::id());
+        $answer->users()->attach(Auth::id());
+        // return redirect()->route('question.index');
         return redirect()->back();
     }
 
@@ -80,9 +81,10 @@ class ThumbsUpController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Answer $answer)
     {
-        $question->users()->detach(Auth::id());
+        $answer->users()->detach(Auth::id());
+        // return redirect()->route('question.index');
         return redirect()->back();
     }
 }

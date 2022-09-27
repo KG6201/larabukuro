@@ -1,66 +1,39 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Larabukuro
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## プロダクトの紹介と操作方法
 
-## About Laravel
+### 投稿された質問に対して回答し合うサービスを作成した。
+質問の投稿はナビゲーションのCreateから行う。
+投稿された質問はナビゲーションのIndexに最新のものから表示される。
+質問への回答は質問の詳細画面から行い、詳細画面は質問をクリックすることで遷移できる。
+詳細画面のNEW ANSWERとDESCRIPTIONの欄に回答を入力しADD ANSWERをクリックすると回答を投稿できる。
+投稿された回答は質問の詳細画面ページの下部に追加されていく。
+これまでに自分が投稿した質問と回答はナビゲーションのMypageから確認できる。
+マイページの質問や回答をクリックすることで、質問の詳細画面や回答した質問の詳細画面に移ることができる。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 工夫した点
+- 質問に対して寄せられている回答数を、詳細画面に移らなくても吹き出しマークの横に表示されているから分かるようにした。
+また、回答がまだない質問は吹き出しマークの色を灰色にし、回答の有無を色で分かるようにした。
+- 回答の投稿は回答の個別ページからではなく質問の詳細画面から行えるようにした。
+これにより質問を見ながら回答を書けるようにしている。
+質問の直下に入力欄を設けたのも同じ目的のためである。
+- TwitterライクのLaratterのFavoriteの代わりにグッドボタン(Thumbs-up)を実装したが、
+質問に対してだけでなく回答に対してもグッドできるようにした。
+これは将来の、質問の詳細画面で回答をグッド数でソートするような機能の追加を想定したものである。
+- マイページからは自分が投稿した質問だけでなく、自分が投稿した回答も見られるようにした。
+それぞれにリンクを設け、対応する詳細画面に移れるようにしている。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 上手く行かなかった点・これから実装したい機能
+- マイページに自分の回答を表示するためにLaratterでのindex.blade.phpの流用をやめ、
+独立したマイページ(mypage.blade.php)を設けた。
+このためコードに重複する部分が多くなってしまった。
+コンポーネントを利用することでコードを再利用できるようだったが、
+提出期限までの時間の兼ね合いから後回しにしてしまった。
+- 質問の詳細画面で回答にグッドボタンを押すとその詳細画面にリダイレクトされるが、
+その後詳細画面におけるBACKボタンが機能しなくなるバグが発生した。
+ナビゲーションを利用すればページ移動は可能なためそのままにしているが、
+スマートな解決策は思いつかずバグを取り除く余裕はなかった。
+同様に回答の更新も元々の質問に戻る方法がすぐには思いつかなかったので、
+質問のIndexページにリダイレクトすることにした。
+- 検索機能に回答を含める余裕がなかった。
+- Best Answer機能を搭載したかったが余裕がなかった。

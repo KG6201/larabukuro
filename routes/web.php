@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\ThumbsUpController;
+use App\Http\Controllers\ThumbsUpAnswerController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\MypageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,11 @@ use App\Http\Controllers\SearchController;
 |
 */
 Route::group(['middleware' => 'auth'], function () {
+    Route::post('answer/{answer}/thumbsup', [ThumbsUpAnswerController::class, 'store'])->name('thumbsupanswer');
+    Route::post('answer/{answer}/unthumbsup', [ThumbsUpAnswerController::class, 'destroy'])->name('unthumbsupanswer');
+
+    Route::resource('answer', AnswerController::class);
+
     Route::get('/question/search/input', [SearchController::class, 'create'])->name('search.input');
     Route::get('/question/search/result', [SearchController::class, 'index'])->name('search.result');
 
@@ -28,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('question/{question}/thumbsup', [ThumbsUpController::class, 'store'])->name('thumbsup');
     Route::post('question/{question}/unthumbsup', [ThumbsUpController::class, 'destroy'])->name('unthumbsup');
 
-    Route::get('/question/mypage', [QuestionController::class, 'mydata'])->name('question.mypage');
+    Route::get('/mypage', MypageController::class)->name('mypage');
     Route::resource('question', QuestionController::class);
 });
 

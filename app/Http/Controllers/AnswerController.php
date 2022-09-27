@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
-use App\Models\Question;
+use App\Models\Answer;
 use Auth;
-use App\Models\User;
 
-class QuestionController extends Controller
+class AnswerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::getAllOrderByUpdated_at();
-        return view('question.index',compact('questions'));
+        //
     }
 
     /**
@@ -28,35 +26,40 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('question.create');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         // バリデーション
         $validator = Validator::make($request->all(), [
-            'question' => 'required | max:191',
+            'answer' => 'required | max:191',
             'description' => 'required',
+            'question_id' => 'required | exists:questions,id',
         ]);
         // バリデーション:エラー
         if ($validator->fails()) {
             return redirect()
-            ->route('question.create')
-            ->withInput()
-            ->withErrors($validator);
+                ->back()
+                ->withInput()
+                ->withErrors($validator);
         }
         // create()は最初から用意されている関数
         // 戻り値は挿入されたレコードの情報
-        $data = $request->merge(['user_id' => Auth::user()->id])->all();
-        $result = Question::create($data);
+        // 🔽 編集 フォームから送信されてきたデータとユーザIDをマージし，DBにinsertする
+        // ddd($request);
+        $data = $request->merge(['user_id' => Auth::user()->id, 'question_id' => $request->question_id])->all();
+        // ddd($data);
+        $result = Answer::create($data);
 
-        return redirect()->route('question.index');
+        return redirect()->back();
     }
 
     /**
@@ -67,12 +70,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $question = Question::find($id);
-        $answers = $question
-            ->questionAnswers()
-            ->orderBy('updated_at','desc')
-            ->get();
-        return view('question.show', compact('question', 'answers'));
+        //
     }
 
     /**
@@ -83,8 +81,8 @@ class QuestionController extends Controller
      */
     public function edit($id)
     {
-        $question = Question::find($id);
-        return view('question.edit', compact('question'));
+        $answer = Answer::find($id);
+        return view('answer.edit', compact('answer'));
     }
 
     /**
@@ -98,18 +96,18 @@ class QuestionController extends Controller
     {
         //バリデーション
         $validator = Validator::make($request->all(), [
-            'question' => 'required | max:191',
+            'answer' => 'required | max:191',
             'description' => 'required',
         ]);
         //バリデーション:エラー
         if ($validator->fails()) {
             return redirect()
-            ->route('question.edit', $id)
+            ->route('answer.edit', $id)
             ->withInput()
             ->withErrors($validator);
         }
         //データ更新処理
-        $result = Question::find($id)->update($request->all());
+        $result = Answer::find($id)->update($request->all());
         return redirect()->route('question.index');
     }
 
@@ -121,18 +119,7 @@ class QuestionController extends Controller
      */
     public function destroy($id)
     {
-        $result = Question::find($id)->delete();
-        return redirect()->route('question.index');
-        //
-    }
-
-    public function mydata()
-    {
-        $questions = User::query()
-        ->find(Auth::user()->id)
-        ->userQuestions()
-        ->orderBy('created_at','desc')
-        ->get();
-        return view('question.index', compact('questions'));
+        $result = Answer::find($id)->delete();
+        return redirect()->back();
     }
 }

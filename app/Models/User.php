@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Question::class);
     }
 
+    public function userAnswers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
     public function questions()
     {
         return $this->belongsToMany(Question::class)->withTimestamps();
@@ -60,5 +65,10 @@ class User extends Authenticatable
     public function followers()
     {
         return $this->belongsToMany(self::class, "follows", "following_id", "user_id")->withTimestamps();
+    }
+
+    public function answers()
+    {
+        return $this->belongsToMany(Answer::class)->withTimestamps();
     }
 }
