@@ -37,7 +37,7 @@ class ThumbsUpController extends Controller
     public function store(Question $question)
     {
         $question->users()->attach(Auth::id());
-        return redirect()->route('question.index');
+        return redirect()->back();
     }
 
     /**
@@ -83,6 +83,6 @@ class ThumbsUpController extends Controller
     public function destroy(Question $question)
     {
         $question->users()->detach(Auth::id());
-        return redirect()->route('question.index');
+        return redirect()->back();
     }
 }
