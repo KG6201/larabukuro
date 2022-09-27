@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Answer;
+use App\Models\Question;
 use Auth;
 
 class AnswerController extends Controller
@@ -82,7 +83,8 @@ class AnswerController extends Controller
     public function edit($id)
     {
         $answer = Answer::find($id);
-        return view('answer.edit', compact('answer'));
+        $question = Question::find($answer->question_id);
+        return view('answer.edit', compact('answer', 'question'));
     }
 
     /**
