@@ -9,6 +9,26 @@
     <div class="max-w-7xl mx-auto sm:w-8/12 md:w-1/2 lg:w-5/12">
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
         <div class="p-6 bg-white border-b border-gray-200">
+          <div class="mb-6">
+            <div class="flex flex-col mb-4">
+              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Question</p>
+              <p class="py-2 px-3 text-grey-darkest" id="question">
+                {{$question->question}}
+              </p>
+            </div>
+            <div class="flex flex-col mb-4">
+              <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Description</p>
+              <p class="py-2 px-3 text-grey-darkest" id="description">
+                {{$question->description}}
+              </p>
+            </div>
+            <div class="flex">
+              <p class="px-1 text-left text-grey-dark">
+                {{$question->user->name}}, {{$question->updated_at}}
+              </p>
+            </div>
+          </div>
+
           @include('common.errors')
           <form class="mb-6" action="{{ route('answer.update',$answer->id) }}" method="POST">
             @method('put')

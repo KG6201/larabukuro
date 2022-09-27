@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\User;
+use App\Models\Answer;
 
 class SearchController extends Controller
 {
@@ -17,10 +18,19 @@ class SearchController extends Controller
     {
         $keyword = trim($request->keyword);
         $users  = User::where('name', 'like', "%{$keyword}%")->pluck('id')->all();
+        // 検索にヒットしたanswersそれぞれに対応するquestionのidを取得
+        $answers_question_id = Answer::query()
+            ->where('answer', 'like', "%{$keyword}%")
+            ->orWhere('description', 'like', "%{$keyword}%")
+            ->orWhereIn('user_id', $users)
+            ->get()
+            ->pluck('question_id')
+            ->all();
         $questions = Question::query()
             ->where('question', 'like', "%{$keyword}%")
             ->orWhere('description', 'like', "%{$keyword}%")
             ->orWhereIn('user_id', $users)
+            ->orWhereIn('id', $answers_question_id)
             ->get();
         return view('question.index', compact('questions'));
     }

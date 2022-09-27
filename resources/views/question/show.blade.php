@@ -22,6 +22,11 @@
                 {{$question->description}}
               </p>
             </div>
+            <div class="flex">
+              <p class="px-1 text-left text-grey-dark">
+                {{$question->user->name}}, {{$question->updated_at}}
+              </p>
+            </div>
           </div>
 
           @include('common.errors')
@@ -56,6 +61,10 @@
               @foreach ($answers as $answer)
               <tr class="hover:bg-grey-lighter">
                 <td class="text-left py-4 px-6 border-b border-grey-light">
+                  <a href="{{ route('follow.show', $answer->user->id) }}">
+                    <p class="text-left text-grey-dark">{{$answer->user->name}}</p>
+                  </a>
+
                   <div class="flex flex-col mb-4">
                     <p class="mb-2 uppercase font-bold text-lg text-grey-darkest">Answer</p>
                     <p class="py-2 px-3 text-grey-darkest" id="question">
@@ -117,6 +126,9 @@
                       </button>
                     </form>
                     @endif
+                    <div>
+                      <p class="text-left text-grey-dark">{{$answer->updated_at}}</p>
+                    </div>
                   </div>
                 </td>
               </tr>
