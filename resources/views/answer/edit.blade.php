@@ -22,6 +22,11 @@
                 {{$question->description}}
               </p>
             </div>
+            <div class="flex">
+              <p class="px-1 text-left text-grey-dark">
+                {{$question->user->name}}, {{$question->updated_at}}
+              </p>
+            </div>
           </div>
 
           @include('common.errors')
