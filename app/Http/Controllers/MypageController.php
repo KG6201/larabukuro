@@ -28,6 +28,9 @@ class MypageController extends Controller
             ->userAnswers()
             ->orderBy('updated_at','desc')
             ->get();
-        return view('mypage', compact('questions', 'answers'));
+        $solved_question_ids = Question::where('is_solved', 1)->pluck('id')->all();
+        // ddd($solved_questions);
+
+        return view('mypage', compact('questions', 'answers', 'solved_question_ids'));
     }
 }

@@ -13,6 +13,7 @@
           <form class="mb-6" action="{{ route('question.update',$question->id) }}" method="POST">
             @method('put')
             @csrf
+            <input type="hidden" name="is_solved" value="{{ 0 }}">
             <div class="flex flex-col mb-4">
               <label class="mb-2 uppercase font-bold text-lg text-grey-darkest" for="question">question</label>
               <input class="border py-2 px-3 text-grey-darkest" type="text" name="question" id="question" value="{{$question->question}}">
@@ -29,6 +30,17 @@
                 Update
               </button>
             </div>
+          </form>
+
+          <form class="mb-6" action="{{ route('question.update',$question->id) }}" method="POST">
+            @method('put')
+            @csrf
+            <input type="hidden" name="is_solved" value="{{ 1 }}">
+            <input type="hidden" name="question" id="question" value="{{$question->question}}">
+            <input type="hidden" name="description" id="description" value="{{$question->description}}">
+            <button type="submit" class="w-full py-3 mt-6 font-medium tracking-widest text-white uppercase bg-black shadow-lg focus:outline-none hover:bg-gray-900 hover:shadow-none">
+              Solved!
+            </button>
           </form>
         </div>
       </div>

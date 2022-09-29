@@ -100,6 +100,7 @@ class QuestionController extends Controller
         $validator = Validator::make($request->all(), [
             'question' => 'required | max:191',
             'description' => 'required',
+            'is_solved' => 'required | boolean',
         ]);
         //バリデーション:エラー
         if ($validator->fails()) {
